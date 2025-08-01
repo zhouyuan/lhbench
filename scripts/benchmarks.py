@@ -94,7 +94,7 @@ class BenchmarkSpec:
             spark_conf_str += f"""--conf "{conf}" """
         spark_shell_args_str = ' '.join(self.extra_spark_shell_args)
         spark_shell_cmd = (
-                f"spark-shell {spark_shell_args_str} " +
+                f"/root/spark-354/bin/spark-shell {spark_shell_args_str} " +
                 (f"--packages {self.maven_artifacts} " if self.maven_artifacts else "") +
                 f"{spark_conf_str} --jars {benchmark_jar_path} -I {benchmark_init_file_path}"
         )
@@ -216,7 +216,7 @@ class DeltaBenchmarkSpec(BenchmarkSpec):
 
     @staticmethod
     def delta_maven_artifacts(delta_version, scala_version):
-        return f"io.delta:delta-core_{scala_version}:{delta_version},io.delta:delta-contribs_{scala_version}:{delta_version}"
+        return f"io.delta:delta-spark_{scala_version}:{delta_version},io.delta:delta-contribs_{scala_version}:{delta_version}"
 
 
 class DeltaTPCDSDataLoadSpec(TPCDSDataLoadSpec, DeltaBenchmarkSpec):
