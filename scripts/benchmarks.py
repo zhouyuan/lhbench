@@ -265,15 +265,13 @@ class IcebergBenchmarkSpec(BenchmarkSpec):
         assert(spark_version is not None)
         spark_major_minor = VersionTuple(spark_version).major_minor_str()
 
-        iceberg_artifact_name = "iceberg-spark3-runtime"
-        if iceberg_version.startswith("1.0") or iceberg_version.startswith("1.1"):
-            iceberg_artifact_name = f"iceberg-spark-runtime-{spark_major_minor}_2.12"
-        if iceberg_version.startswith("0.14"):
-            iceberg_artifact_name = "iceberg-spark-runtime-3.2_2.12"
+        iceberg_artifact_name = "iceberg-spark-runtime"
+        iceberg_artifact_name = f"iceberg-spark-runtime-{spark_major_minor}_2.12"
+
 
         super().__init__(
             format_name="iceberg",
-            maven_artifacts=f"org.apache.iceberg:{iceberg_artifact_name}:{iceberg_version},org.apache.iceberg:iceberg-hive-runtime:{iceberg_version}",
+            maven_artifacts=f"org.apache.iceberg:{iceberg_artifact_name}:{iceberg_version}",
             spark_confs=iceberg_spark_confs,
             benchmark_main_class=benchmark_main_class,
             main_class_args=main_class_args,
@@ -324,7 +322,7 @@ class HudiBenchmarkSpec(BenchmarkSpec):
         ]
         super().__init__(
             format_name="hudi",
-            maven_artifacts=f"org.apache.hudi:hudi-spark3-bundle_{scala_version}:{hudi_version},org.apache.spark:spark-avro_{scala_version}:3.1.2",
+            maven_artifacts=f"org.apache.hudi:hudi-spark3.5-bundle_{scala_version}:{hudi_version}",
             spark_confs=hudi_spark_confs,
             benchmark_main_class=benchmark_main_class,
             main_class_args=main_class_args,
